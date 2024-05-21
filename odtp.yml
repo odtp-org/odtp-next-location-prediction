@@ -1,67 +1,344 @@
 # This file should contain basic component information for your component.
-component-name: Component Name
-component-author: Component Author
-component-version: Component Version
-component-repository: Component Repository
-component-license: Component License
-component-type: ephemeral or interactive
-component-description: Description
+component-name: odtp-next-location-prediction
+component-author: Ye Hong & Carlos Vivar Rios
+component-version: 0.0.1
+component-repository: https://github.com/odtp-org/odtp-next-location-prediction
+component-license: BSD-3-Clause
+component-type: ephemeral
+component-description: TBD
 tags:
-  - tag1
-  - tag2
+  - training
+  - inference
 
 # Information about the tools
 tools:
-  - tool-name: tool's name
-    tool-author: Tool's author
-    tool-version: Tool version
+  - tool-name: next-location-prediction
+    tool-author: Ye Hong
+    tool-version: 33e17ae3f857b22a6164ecb5f9c384f62b279b34
     tool-repository: Tool's repository
-    tool-license: Tool's license
+    tool-license: Apache-2.0 license
 
 # If your tool require some secrets token to be passed as ENV to the component
 # This won't be traced in MongoDB
 secrets:
-  - name: Key of the argument
-  - description: Description of the secret
+  - name: GITHUB_USERNAME
+    description: Github username
+  - name: GITHUB_TOKEN
+    description: Github token
 
 # If the tool requires some building arguments such as Matlab license
-build-args:
-  - name: Key of the argument
-  - description: Descriptio of the building argument
-  - secret: Bool
+build-args: null
 
 # If applicable, ports exposed by the component
 # Include Name, Description, and Port Value for each port
-ports:
-  - name: PORT A
-    description: Description of Port A
-    port-value: XXXX
-  - name: PORT B
-    description: Description of Port B
-    port-value: YYYY
+ports: null
 
 # If applicable, parameters exposed by the component
 # Datatype can be str, int, float, or bool.
 parameters:
-  - name: PARAMETER A
-    default-value: DEFAULT_VALUE_A
-    datatype: DATATYPE_A
-    description: Description of Parameter A
-    parameter-bounds: # Boundaries for int and float datatype
-      - 0 # Lower bound
-      - inf # Upper bound
-    options: null
-    allow-custom-value: false # If true the user can add a custom value out of parameter-bounds, or options
-  - name: PARAMETER B
-    default-value: DEFAULT_VALUE_B
-    datatype: DATATYPE_B
-    description: Description of Parameter B
+  - name: TRAINING
+    default-value: True
+    datatype: bool
+    description: Train 'networkName' NN with 'train_dataset' in 'data_save_root' if true, use 'pretrain_file' NN to test data from 'inference_data_dir' in 'data_save_root' if false
     parameter-bounds: null
-    options: # If your string parameter is limited to a few option, please list them here. 
-      - OptionA
-      - OptionB
-      - OptionC
-    allow-custom-value: false # If true the user can add a custom value out of parameter-bounds, or options
+    options: null
+    allow-custom-value: false
+
+  - name: TRAIN_DATASET
+    default-value: dtepr
+    datatype: str
+    description: Dataset name for training, shall be available in 'data_save_root'
+    parameter-bounds: null
+    options: null
+    allow-custom-value: false
+
+  - name: INFERENCE_DATA_DIR
+    default-value: inference
+    datatype: str
+    description: Directory containing all datasets for inference, shall be available in 'data_save_root'
+    parameter-bounds: null
+    options: null
+    allow-custom-value: false
+
+  - name: PRETRAIN_DIR
+    default-value: dtepr_mhsa_demo
+    datatype: str
+    description: Directory containing the trained NN weights, shall be available in 'run_save_root'
+    parameter-bounds: null
+    options: null
+    allow-custom-value: false
+
+  - name: IF_EMBED_TIME
+    default-value: True
+    datatype: bool
+    description: Whether to embed time information
+    parameter-bounds: null
+    options: null
+    allow-custom-value: false
+
+  - name: VERBOSE
+    default-value: True
+    datatype: bool
+    description: Verbose output
+    parameter-bounds: null
+    options: null
+    allow-custom-value: false
+
+  - name: DEBUG
+    default-value: False
+    datatype: bool
+    description: Debug mode
+    parameter-bounds: null
+    options: null
+    allow-custom-value: false
+
+  - name: BATCH_SIZE
+    default-value: 256
+    datatype: int
+    description: Batch size for training
+    parameter-bounds: 
+      - 1
+      - inf
+    options: null
+    allow-custom-value: false
+
+  - name: PRINT_STEP
+    default-value: 10
+    datatype: int
+    description: Steps between printing training progress
+    parameter-bounds: 
+      - 1
+      - inf
+    options: null
+    allow-custom-value: false
+
+  - name: NUM_WORKERS
+    default-value: 0
+    datatype: int
+    description: Number of worker threads for data loading
+    parameter-bounds: 
+      - 0
+      - inf
+    options: null
+    allow-custom-value: false
+
+  - name: BASE_EMB_SIZE
+    default-value: 64
+    datatype: int
+    description: Base embedding size
+    parameter-bounds: 
+      - 1
+      - inf
+    options: null
+    allow-custom-value: false
+
+  - name: NETWORK_NAME
+    default-value: mhsa
+    datatype: str
+    description: Name of the network
+    parameter-bounds: null
+    options: 
+      - mhsa
+      - lstm
+    allow-custom-value: false
+
+  - name: FC_DROPOUT
+    default-value: 0.1
+    datatype: float
+    description: Dropout rate for fully connected layers
+    parameter-bounds: 
+      - 0.0
+      - 1.0
+    options: null
+    allow-custom-value: false
+
+  - name: MHSA_NUM_ENCODER_LAYERS
+    default-value: 4
+    datatype: int
+    description: Number of encoder layers in MHSA
+    parameter-bounds: 
+      - 1
+      - inf
+    options: null
+    allow-custom-value: false
+
+  - name: MHSA_NHEAD
+    default-value: 8
+    datatype: int
+    description: Number of attention heads in MHSA
+    parameter-bounds: 
+      - 1
+      - inf
+    options: null
+    allow-custom-value: false
+
+  - name: MHSA_DIM_FEEDFORWARD
+    default-value: 256
+    datatype: int
+    description: Feedforward dimension in MHSA
+    parameter-bounds: 
+      - 1
+      - inf
+    options: null
+    allow-custom-value: false
+
+  - name: MHSA_DROPOUT
+    default-value: 0.1
+    datatype: float
+    description: Dropout rate in MHSA
+    parameter-bounds: 
+      - 0.0
+      - 1.0
+    options: null
+    allow-custom-value: false
+
+  - name: LSTM_ATTENTION
+    default-value: False
+    datatype: bool
+    description: Whether to include self-attention layer in LSTM
+    parameter-bounds: null
+    options: null
+    allow-custom-value: false
+
+  - name: LSTM_RNN_TYPE
+    default-value: LSTM
+    datatype: str
+    description: Type of RNN (LSTM or GRU)
+    parameter-bounds: null
+    options: 
+      - LSTM
+      - GRU
+    allow-custom-value: false
+
+  - name: LSTM_HIDDEN_SIZE
+    default-value: 128
+    datatype: int
+    description: Hidden size for LSTM
+    parameter-bounds: 
+      - 1
+      - inf
+    options: null
+    allow-custom-value: false
+
+  - name: OPTIMIZER
+    default-value: Adam
+    datatype: str
+    description: Optimizer type
+    parameter-bounds: null
+    options: 
+      - Adam
+      - SGD
+    allow-custom-value: false
+
+  - name: OPTIMIZER_MAX_EPOCH
+    default-value: 100
+    datatype: int
+    description: Maximum number of epochs for optimizer
+    parameter-bounds: 
+      - 1
+      - inf
+    options: null
+    allow-custom-value: false
+
+  - name: OPTIMIZER_LR
+    default-value: 0.001
+    datatype: float
+    description: Learning rate for optimizer
+    parameter-bounds: 
+      - 0.0
+      - 1.0
+    options: null
+    allow-custom-value: false
+
+  - name: OPTIMIZER_WEIGHT_DECAY
+    default-value: 0.000001
+    datatype: float
+    description: Weight decay for optimizer
+    parameter-bounds: 
+      - 0.0
+      - 1.0
+    options: null
+    allow-custom-value: false
+
+  - name: OPTIMIZER_ADAM_BETA1
+    default-value: 0.9
+    datatype: float
+    description: Beta1 parameter for Adam optimizer
+    parameter-bounds: 
+      - 0.0
+      - 1.0
+    options: null
+    allow-custom-value: false
+
+  - name: OPTIMIZER_ADAM_BETA2
+    default-value: 0.999
+    datatype: float
+    description: Beta2 parameter for Adam optimizer
+    parameter-bounds: 
+      - 0.0
+      - 1.0
+    options: null
+    allow-custom-value: false
+
+  - name: OPTIMIZER_SGD_MOMENTUM
+    default-value: 0.98
+    datatype: float
+    description: Momentum for SGD optimizer
+    parameter-bounds: 
+      - 0.0
+      - 1.0
+    options: null
+    allow-custom-value: false
+
+  - name: OPTIMIZER_NUM_WARMUP_EPOCHS
+    default-value: 2
+    datatype: int
+    description: Number of warmup epochs for optimizer
+    parameter-bounds: 
+      - 1
+      - inf
+    options: null
+    allow-custom-value: false
+
+  - name: OPTIMIZER_NUM_TRAINING_EPOCHS
+    default-value: 50
+    datatype: int
+    description: Number of training epochs for optimizer
+    parameter-bounds: 
+      - 1
+      - inf
+    options: null
+    allow-custom-value: false
+
+  - name: OPTIMIZER_PATIENCE
+    default-value: 3
+    datatype: int
+    description: Patience for learning rate decay
+    parameter-bounds: 
+      - 1
+      - inf
+    options: null
+    allow-custom-value: false
+
+  - name: OPTIMIZER_LR_STEP_SIZE
+    default-value: 1
+    datatype: int
+    description: Step size for learning rate decay
+    parameter-bounds: 
+      - 1
+      - inf
+    options: null
+    allow-custom-value: false
+
+  - name: OPTIMIZER_LR_GAMMA
+    default-value: 0.1
+    datatype: float
+    description: Gamma value for learning rate decay
+    parameter-bounds: 
+      - 0.0
+      - 1.0
+    options: null
+    allow-custom-value: false
 
 # If applicable, data-input list required by the component
 data-inputs:
@@ -87,9 +364,9 @@ data-output:
 
 # If applicable, path to schemas to perform semantic validation.
 # Still under development. Ignore.
-schema-input: PATH_TO_INPUT_SCHEMA
-schema-output: PATH_TO_OUTPUT_SCHEMA
+schema-input: null
+schema-output: null
 
 # If applicable, define devices needed such as GPU.
 devices:
-  gpu: Bool
+  gpu: True

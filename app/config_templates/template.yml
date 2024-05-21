@@ -1,3 +1,65 @@
-# Use the variable name between squared brackets to replace values in the template. 
-constant_string: /odtp/odtp-workdir/cache
-value_to_replace: [variable_key]
+misc:
+  # True: train 'networkName' NN with 'train_dataset' in 'data_save_root'
+  # False: use 'pretrain_file' NN to test data from 'inference_data_dir' in 'data_save_root'
+  training: {{TRAINING}} #True
+
+  data_save_root: ./data
+  run_save_root: ./data/model
+
+  # dataset name for training, shall be available in 'data_save_root'
+  train_dataset: {{TRAIN_DATASET}} #dtepr
+  ## only used for inference
+  # dir containing all datasets for inference, shall be available in 'data_save_root'
+  inference_data_dir: {{INFERENCE_DATA_DIR}} #inference
+  # dir containing the trained nn weights, shall be available in 'run_save_root'
+  pretrain_dir: {{PRETRAIN_DIR}} #dtepr_mhsa_demo
+
+  # 
+  if_embed_time: {{IF_EMBED_TIME}} #True
+
+  verbose: {{VERBOSE}} #True
+  debug: {{DEBUG}} #False
+  batch_size: {{BATCH_SIZE}} #256
+  print_step: {{PRINT_STEP}} #10
+  num_workers: {{NUM_WORKERS}} #0
+  
+
+embedding:
+  base_emb_size: {{BASE_EMB_SIZE}} #64
+
+model:
+  networkName: {{NETWORK_NAME}} #mhsa
+  fc_dropout: {{FC_DROPOUT}} #0.1
+
+  # only for mhsa
+  num_encoder_layers: {{MHSA_NUM_ENCODER_LAYERS}} #4
+  nhead: {{MHSA_NHEAD}} #8
+  dim_feedforward: {{MHSA_DIM_FEEDFORWARD}} #256
+  dropout: {{MHSA_DROPOUT}} #0.1
+  
+  # only for LSTM
+  # whether include self-attention layer
+  attention: {{LSTM_ATTENTION}} #False
+  # LSTM or GRU
+  rnn_type: {{LSTM_RNN_TYPE}} #LSTM
+  hidden_size: {{LSTM_HIDDEN_SIZE}} #128
+
+optimiser:
+  # Adam or SGD
+  optimizer: {{OPTIMIZER}} #Adam
+  max_epoch: {{OPTIMIZER_MAX_EPOCH}} #100
+  lr: {{OPTIMIZER_LR}} #0.001
+  weight_decay: {{OPTIMIZER_WEIGHT_DECAY}} #0.000001
+  # for Adam
+  beta1: {{OPTIMIZER_ADAM_BETA1}} #0.9
+  beta2: {{OPTIMIZER_ADAM_BETA2}} #0.999
+  # for SGD
+  momentum: {{OPTIMIZER_SGD_MOMENTUM}} #0.98
+
+  # for warmup
+  num_warmup_epochs: {{OPTIMIZER_NUM_WARMUP_EPOCHS}} #2
+  num_training_epochs: {{OPTIMIZER_NUM_TRAINING_EPOCHS}} #50
+  # for decay
+  patience: {{OPTIMIZER_PATIENCE}} #3
+  lr_step_size: {{OPTIMIZER_LR_STEP_SIZE}} #1
+  lr_gamma: {{OPTIMIZER_LR_GAMMA}} #0.1

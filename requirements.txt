@@ -1,1 +1,4 @@
-# Please list here all python dependencies of your tool
+torch==2.3.0
+trackintel==1.2.2
+easydict
+transformers

@@ -1,6 +1,9 @@
-# Name of the component
+# Next location prediction
 
-> TBD
+> [!WARNING]
+> This component is still under development.
+
+> Description TBD
 
 | Tool Info | Links |
 | --- | --- |
@@ -18,8 +21,6 @@ odtp new odtp-component-entry \
 ``` 
 
 ## Data sheet
-
-### Parameters
 
 ### Parameters
 
@@ -61,11 +62,15 @@ odtp new odtp-component-entry \
 
 ### Input Files
 
+To be developed
+
 | File/Folder | Description |
 | --- | --- | 
 | A | B |
 
 ### Output Files
+
+To be developed
 
 | File/Folder | Description |
 | --- | --- | 
@@ -75,38 +80,48 @@ odtp new odtp-component-entry \
 
 ### How to run this component as docker
 
-Build the dockerfile 
+1. Build the dockerfile 
 
 ```
 docker build -t odtp-next-location-prediction .
 ```
 
-Run the following command. Mount the correct volumes for input/output folders. 
+2. Create `odtp-input` and `odtp-output` files.
+
+3a. Run the following command. Mount the correct volumes for input/output folders.
 
 ```
 docker run -it --rm \
--v {PATH_TO_YOUR_INPUT_VOLUME}:/odtp/odtp-input \
--v {PATH_TO_YOUR_OUTPUT_VOLUME}:/odtp/odtp-output \
---env-file .env next-location-prediction
+-v $PWD/odtp-input:/odtp/odtp-input \
+-v $PWD/odtp-output:/odtp/odtp-output \
+--env-file .env \
+next-location-prediction
 ```
 
+3b. If you want to run docker with Nvidia GPU compatibility: 
+
+```
+docker run -it --rm \
+-v $PWD/odtp-input:/odtp/odtp-input \
+-v $PWD/odtp-output:/odtp/odtp-output \
+--gpus all \
+--env-file .env \
+odtp-next-location-prediction
+```
+
+### How to debug this component in docker?
+
+1. Run the docker command overwritting the entrypoint:
+
+```
+docker run -it --rm \
+--entrypoint bash
+odtp-next-location-prediction
+```
+2. Configure the environment variables with the desired configuration, and place the input files on `/odtp/odtp-input`.
+
+3. Execute the commands on `app.sh` one by one.
 
 ## Developed by
 
-XXXXXXXXXX
-
-```
-root@2e20536b1400:/odtp/odtp-workdir/next-location-prediction/data/model/dtepr_mhsa_1716103576# ls
-checkpoint.pt  conf.json  dtepr_mhsa_default.csv
-
-root@2e20536b1400:/odtp/odtp-workdir/next-location-prediction/data/model/dtepr_mhsa_1716103576# cd ..
-
-
-root@2e20536b1400:/odtp/odtp-workdir/next-location-prediction/data/model# cd dtepr_mhsa_
-dtepr_mhsa_1716103576/ dtepr_mhsa_1716108417/ dtepr_mhsa_demo/
-
-root@2e20536b1400:/odtp/odtp-workdir/next-location-prediction/data/model# cd dtepr_mhsa_1716108417/
-root@2e20536b1400:/odtp/odtp-workdir/next-location-prediction/data/model/dtepr_mhsa_1716108417# ls
-conf.json  inference_mhsa.csv
-```
-
+CSFM / SDSC

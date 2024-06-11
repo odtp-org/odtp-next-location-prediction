@@ -10,7 +10,7 @@
 # Clone the repository of your tool and checkout to one specific commit. 
 #########################################################
 
-git clone https://$GITHUB_USERNAME:$GITHUB_TOKEN@github.com/irmlma/next-location-prediction.git /odtp/odtp-workdir/next-location-prediction
+git clone https://github.com/irmlma/next-location-prediction.git /odtp/odtp-workdir/next-location-prediction
 cd /odtp/odtp-workdir/next-location-prediction
 git checkout 33e17ae3f857b22a6164ecb5f9c384f62b279b34
 

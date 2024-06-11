@@ -2,6 +2,7 @@ FROM ubuntu:22.04
 
 RUN apt update
 RUN apt install python3.10 python3-pip -y 
+RUN pip install --upgrade setuptools
 
 ##################################################
 # Ubuntu setup
@@ -22,6 +23,17 @@ RUN apt-get update && apt-get -y upgrade \
     zip \
     ca-certificates \
     && rm -rf /var/lib/apt/lists/*
+
+
+##################################################
+# GDAL Setup
+##################################################
+
+RUN apt-get update && \
+    apt-get install -y libgdal-dev && \
+    apt-get clean;
+
+RUN pip install --no-binary fiona fiona
 
 ##################################################
 # ODTP setup

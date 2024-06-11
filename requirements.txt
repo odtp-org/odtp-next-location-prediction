@@ -2,3 +2,5 @@ torch==2.3.0
 trackintel==1.2.2
 easydict
 transformers
+#git+https://github.com/Toblerity/Fiona
+#https://files.pythonhosted.org/packages/a6/2b/2d3e63b39ee1852925e128cdd995f220d7ebe5174e6838ad44a5427380e7/fiona-1.9.6-cp310-cp310-macosx_11_0_arm64.whl

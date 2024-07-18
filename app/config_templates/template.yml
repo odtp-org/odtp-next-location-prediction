@@ -5,6 +5,7 @@ misc:
 
   data_save_root: ./data
   run_save_root: ./data/model
+  run_name: {{RUN_NAME}}
 
   # dataset name for training, shall be available in 'data_save_root'
   train_dataset: {{TRAIN_DATASET}} #dtepr

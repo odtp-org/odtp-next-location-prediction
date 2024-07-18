@@ -33,7 +33,7 @@ RUN apt-get update && \
     apt-get install -y libgdal-dev && \
     apt-get clean;
 
-RUN pip install --no-binary fiona fiona
+#RUN pip install --no-binary fiona
 
 ##################################################
 # ODTP setup
@@ -81,5 +81,13 @@ COPY ./odtp-component-client /odtp/odtp-component-client
 
 COPY ./app /odtp/odtp-app
 WORKDIR /odtp
+
+##################################################
+# Fix for end of the line issue on Windows
+##################################################
+
+RUN sed -i 's/\r$//' /odtp/odtp-component-client/odtp-app.sh
+RUN sed -i 's/\r$//' /odtp/odtp-component-client/startup.sh
+RUN sed -i 's/\r$//' /odtp/odtp-app/app.sh
 
 ENTRYPOINT ["bash", "/odtp/odtp-component-client/startup.sh"]

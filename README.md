@@ -23,10 +23,11 @@ odtp new odtp-component-entry \
 ## Data sheet
 
 ### Parameters
-
+RUN_NAME=
 | Parameter                    | Description                                                                                                                                            | Default Value  | Options                       |
 |------------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------|----------------|-------------------------------|
 | TRAINING                     | Train 'networkName' NN with 'train_dataset' in 'data_save_root' if true, use 'pretrain_file' NN to test data from 'inference_data_dir' in 'data_save_root' if false | True           | null                          |
+| RUN_NAME                     | Output folder name | dtepr_mhsa           | Any string   
 | TRAIN_DATASET                | Dataset name for training, shall be available in 'data_save_root'                                                                                       | dtepr          | null                          |
 | INFERENCE_DATA_DIR           | Directory containing all datasets for inference, shall be available in 'data_save_root'                                                                 | inference      | null                          |
 | PRETRAIN_DIR                 | Directory containing the trained NN weights, shall be available in 'run_save_root'                                                                      | dtepr_mhsa_demo| null                          |
@@ -95,8 +96,10 @@ docker run -it --rm \
 -v $PWD/odtp-input:/odtp/odtp-input \
 -v $PWD/odtp-output:/odtp/odtp-output \
 --env-file .env \
-next-location-prediction
+odtp-next-location-prediction
 ```
+
+docker run -it --rm -v $PWD/odtp-input:/odtp/odtp-input -v $PWD/odtp-output:/odtp/odtp-output --env-file .env odtp-next-location-prediction
 
 3b. If you want to run docker with Nvidia GPU compatibility: 
 

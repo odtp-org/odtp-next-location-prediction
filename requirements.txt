@@ -1,5 +1,7 @@
 torch==2.3.0
 trackintel==1.2.2
+numpy==1.26.4
+Fiona==1.8.22
 easydict
 transformers
 #git+https://github.com/Toblerity/Fiona

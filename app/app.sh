@@ -21,7 +21,7 @@ pip install -e .
 # Read placeholders and create config file from Environment  
 #########################################################
 
-python3 /odtp/odtp-component-client/parameters.py /odtp/odtp-app/config_templates/template.yml /odtp/odtp-workdir/example/config/config.yml
+python3 /odtp/odtp-component-client/parameters.py /odtp/odtp-app/config_templates/template.yml /odtp/odtp-workdir/next-location-prediction/example/config/config.yml
 
 #########################################################
 # 3. INPUT FOLDER MANAGEMENT
@@ -51,7 +51,6 @@ fi
 # While the output is managed by ODTP and placed in /odtp/odtp-output/
 #########################################################
 
-# COMMAND $PARAMETER_A #PARAMETER_B /odtp/odtp-input/data
 python3 example/run.py
 
 #########################################################

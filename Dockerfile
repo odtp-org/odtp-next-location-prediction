@@ -49,6 +49,7 @@ RUN pip install -r /tmp/odtp.requirements.txt
 
 # Installing dependecies from the app
 COPY requirements.txt /tmp/requirements.txt
+RUN pip install --upgrade pip
 RUN pip install -r /tmp/requirements.txt
 
 

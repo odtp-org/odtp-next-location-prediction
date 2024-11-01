@@ -16,7 +16,7 @@
 ```
 odtp new odtp-component-entry \
 --name odtp-next-location-prediction \
---component-version 0.0.1 \
+--component-version 0.0.3 \
 --repository https://github.com/odtp-org/odtp-next-location-prediction
 ``` 
 

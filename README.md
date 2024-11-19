@@ -16,7 +16,7 @@
 ```
 odtp new odtp-component-entry \
 --name odtp-next-location-prediction \
---component-version 0.0.3 \
+--component-version v0.0.4 \
 --repository https://github.com/odtp-org/odtp-next-location-prediction
 ``` 
 
@@ -124,6 +124,14 @@ odtp-next-location-prediction
 2. Configure the environment variables with the desired configuration, and place the input files on `/odtp/odtp-input`.
 
 3. Execute the commands on `app.sh` one by one.
+
+
+## Changelog
+
+- v0.0.4
+    - Client updated to v0.1.2
+    - Github action for dockerhub publishing inlcuded
+    - Added fix when building on windows
 
 ## Developed by
 
